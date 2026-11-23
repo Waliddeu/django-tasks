@@ -6,6 +6,14 @@
 <body>
     <h1>My Posts</h1>
         <p>Welcome to my blog!</p>
+        {% if user.author %}
+            <a href="{% url 'create_post' %}">New post</a>
+        {% endif %}
+
+        {% for post in posts %}
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.content }}</p>
+        {% endfor %}
 </body>
 </html>
 {% endblock %}
