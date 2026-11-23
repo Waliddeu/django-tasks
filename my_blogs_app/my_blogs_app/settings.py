@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'my_blogs_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'my_blogs_db',
+        'NAME': 'blogs_db',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '127.0.0.1',
@@ -129,3 +129,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
 LOGIN_URL = "login"
+AUTH_USER_MODEL = "accounts.User"
