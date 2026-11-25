@@ -1,11 +1,16 @@
 {% extends "base.html" %}
-{% block title %}Register{% endblock %}
-{% block content %}
-<h2>Sign up</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Create account</button>
-</form>
 
-{% endblock %} 
+{% block title %}Sign up | My Blog{% endblock %}
+
+{% block content %}
+<section class="surface form-card" aria-labelledby="register-title">
+    <h1 class="h2 text-center" id="register-title">Create your account</h1>
+    <p class="meta text-center mb-4">Join the community and start writing.</p>
+    <form method="post">
+        {% csrf_token %}
+        {% include "includes/form_fields.html" %}
+        <button class="btn btn-primary w-100" type="submit">Create account</button>
+    </form>
+    <p class="meta text-center mt-4 mb-0">Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+</section>
+{% endblock %}

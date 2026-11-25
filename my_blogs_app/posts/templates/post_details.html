@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} | My Blog{% endblock %}
+
+{% block content %}
+<div class="reading-column">
+    <p><a class="text-decoration-none" href="{% url 'posts' %}">&larr; Back to posts</a></p>
+
+    <article class="surface article">
+        <h1 class="mb-3">{{ post.title }}</h1>
+        <div class="d-flex align-items-center gap-3 mb-4 pb-4 border-bottom">
+            <span class="avatar" aria-hidden="true">{{ post.author.name|first|upper }}</span>
+            <div>
+                <div class="fw-semibold">{{ post.author.name }}</div>
+                <time class="meta" datetime="{{ post.created_at|date:'c' }}">{{ post.created_at|date:"F j, Y" }}</time>
+            </div>
+        </div>
+        <div class="article__body">{{ post.content|linebreaks }}</div>
+    </article>
+
+    <section class="mt-5" aria-labelledby="comments-title">
+        <h2 class="h4 mb-3" id="comments-title">Comments ({{ comments|length }})</h2>
+
+        {% for comment in comments %}
+            <div class="surface comment mb-3">
+                <span class="avatar" aria-hidden="true">{{ comment.user.username|first|upper }}</span>
+                <div>
+                    <div>
+                        <strong>{{ comment.user.username }}</strong>
+                        <span class="meta ms-1">{{ comment.created_at|date:"M j, Y, H:i" }}</span>
+                    </div>
+                    <div>{{ comment.content|linebreaksbr }}</div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="meta">No comments yet.</p>
+        {% endfor %}
+
+        {% if user.is_authenticated %}
+            <form class="surface p-4 mt-4" method="post" action="{% url 'add_comment' post.id %}">
+                {% csrf_token %}
+                <label class="form-label fw-semibold" for="comment-content">Add a comment</label>
+                <textarea class="comment-input mb-3" id="comment-content" name="content" rows="4" maxlength="500"
+                          placeholder="Share your thoughts..." required></textarea>
+                <button class="btn btn-primary" type="submit">Post comment</button>
+            </form>
+        {% else %}
+            <a class="btn btn-outline-primary mt-2" href="{% url 'login' %}?next={{ request.path|urlencode }}">Log in to comment</a>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

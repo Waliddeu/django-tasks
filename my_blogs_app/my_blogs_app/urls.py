@@ -24,9 +24,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", views.home, name="home"),
     path("create_post/", views.create_post, name="create_post"),
+    path("posts/<int:post_id>/", views.post_details, name="post_details"),
     path("accounts/", include("accounts.urls")),
     path("accounts/", include("django.contrib.auth.urls")),  # Add this line for built-in auth views
     path("accounts/login/", accounts_views.login_view, name="login"),
     path("accounts/register/", accounts_views.register, name="register"),
     path("accounts/logout/", accounts_views.logout_view, name="logout"),
+
 ]
